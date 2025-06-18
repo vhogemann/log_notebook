@@ -16,7 +16,7 @@ def query_logs(user_token:str, repo:str, start:str, correlation_id:str) -> dict[
         user_token=user_token
     )
 
-    query = f"correlation_id =~ join({{{correlation_id} class=* service=*}})"
+    query = f" join({{{correlation_id} class=* service=*}}, field=correlation_id)"
     queryjob = client.create_queryjob(query, is_live=False, start=start)    
     event_map: dict[str,list] = {}
 
