@@ -124,8 +124,8 @@ DEFAULT_THEME = Theme(
     ),
     service_colors=[
         ("#ffffff", "#4e4e4e"), 
-        ("#ffcccc", "#800020"), 
-        ("#ffebcc", "#805000"),
+        ("#b3d1ff", "#345678"),  # Muted blue
+        ("#cce6ff", "#3a5068"),  # Muted blue-gray
         ("#d6fdac", "#006400"), 
         ("#b4865a", "#222222"), 
         ("#4e78a5", "#ffffff"),
@@ -136,11 +136,11 @@ DEFAULT_THEME = Theme(
         ("#2c3e50", "#ffffff"), 
         ("#186a3b", "#ffffff"),
         ("#9b59b6", "#ffffff"), 
-        ("#f39c12", "#222222"), 
+        ("#a3c1ad", "#222222"),  # Muted teal
         ("#2980b9", "#ffffff"),
         ("#16a085", "#ffffff"), 
-        ("#d35400", "#ffffff"), 
-        ("#ba4a00", "#ffffff"),
+        ("#6c7a89", "#ffffff"),  # Muted blue-gray
+        ("#5d8aa8", "#ffffff"),  # Muted blue
     ],
     group_colors=[
         ("#bbbbbb", "#383838"),

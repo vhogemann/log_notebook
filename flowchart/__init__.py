@@ -1,5 +1,5 @@
 from .flowchart import *
-from .node import *
+from .node.node import *
 from .theme import *
 
 __all__ = [

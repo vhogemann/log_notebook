@@ -1,8 +1,9 @@
-import re
 from graphviz import Digraph
 from typing import List
-from .node import Node
-from .theme.theme import Theme, DEFAULT_THEME
+
+from flowchart.message_parser import parse_message
+from .node.node import Node
+from .theme import Theme, DEFAULT_THEME
 
 class FlowChart:
     # Gets a list of nodes, sort it by timestamp and returns a list of tuples [Node, Node] like
@@ -55,9 +56,8 @@ class FlowChart:
                  fontcolor=self.theme.edge.color)
 
         def add_node(graph, n):
+            n.addToGraph(self.theme, graph)
             if n.level == "ERROR":
-                graph.node(str(n.id), label=n.label(), color=self.theme.error_edge.color)
-                # Create a new node for the error message
                 error_node_name = f"{n.className}_error"
                 # Style the error node
                 error_message = n.stacktrace().replace('\n', "\l")
@@ -73,7 +73,6 @@ class FlowChart:
                 # Add an edge from the main node to the error node
                 dot.edge(str(n.id), error_node_name, color=self.theme.error_edge.color, style=self.theme.error_edge.style)
             elif n.level == "WARN":
-                graph.node(str(n.id), label=n.label(), color=self.theme.warn_edge.color)
                 warn_node_name = f"{n.className}_warn"
                 dot.node(warn_node_name,
                          label=n.stacktrace().replace('\n', "\l"),
@@ -86,13 +85,9 @@ class FlowChart:
                             labelloc='l')
                 dot.edge(str(n.id), warn_node_name, color=self.theme.warn_edge.color, style=self.theme.warn_edge.style)
             else:
-                graph.node(str(n.id), label=n.label())
-                if n.className == "WorkflowManager":
-                    match = re.search(r"Workflow .* completed and went through the following checkpoints \[(.*?)\]", node.message)
-                    if match:
-                        steps = "\n".join(match.group(1).split(", "))
-                        dot.node('workflow_steps',
-                          label=steps,
+                for message in parse_message(n):
+                    dot.node(f'workflow_steps',
+                          label=message,
                           shape=self.theme.info_note.shape, 
                           style=self.theme.info_note.style, 
                           fillcolor=self.theme.info_note.fillcolor,
@@ -100,8 +95,7 @@ class FlowChart:
                           fontsize=self.theme.info_note.fontsize,
                           fontcolor=self.theme.info_note.fontcolor,
                           labelloc='l')
-                        dot.edge(str(n.id), 'workflow_steps', color=self.theme.info_edge.color, style=self.theme.info_edge.style)
-                    
+                    dot.edge(str(n.id), 'workflow_steps', color=self.theme.info_edge.color, style=self.theme.info_edge.style)
 
         # Add start and end nodes
         dot.node('S', 'start', 
