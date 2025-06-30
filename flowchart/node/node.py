@@ -88,8 +88,12 @@ class Node:
         else:
             return theme.edge.color
 
-    def addToGraph(self, theme: Theme, graph:Digraph):
-        graph.node(str(self.id), 
+    # Override this method to add custom notes to the node
+    def addNote(self, theme: Theme, graph: Digraph):
+        pass;
+
+    def addToGraph(self, theme: Theme, graph:Digraph, subgraph: Digraph):
+        subgraph.node(str(self.id), 
                     label=self.label(), 
                     shape=theme.node.shape, 
                     style=theme.node.style, 
@@ -98,4 +102,29 @@ class Node:
                     fontname=theme.node.fontname, 
                     fontsize=theme.node.fontsize, 
                     fontcolor=theme.node.fontcolor)
+        if self.level == "ERROR":
+            error_node_name = f"{self.id}_error"
+            # Style the error node
+            error_message = self.stacktrace().replace('\n', "\l")
+            graph.node(error_node_name,
+                        label=error_message,
+                        shape=theme.error_note.shape, 
+                        style=theme.error_note.style, 
+                        fillcolor=theme.error_note.fillcolor,
+                        fontname=theme.error_note.fontname, 
+                        fontsize=theme.error_note.fontsize,
+                        fontcolor=theme.error_note.fontcolor,
+                        labelloc='l')
+        elif self.level == "WARN":
+            warn_node_name = f"{self.id}_warn"
+            graph.node(warn_node_name,
+                        label=self.stacktrace().replace('\n', "\l"),
+                        shape=theme.warn_note.shape, 
+                        style=theme.warn_note.style, 
+                        fillcolor=theme.warn_note.fillcolor,
+                        fontname=theme.warn_note.fontname, 
+                        fontsize=theme.warn_note.fontsize,
+                        fontcolor=theme.warn_note.fontcolor,
+                        labelloc='l')
+        self.addNote(theme, graph)
         return graph

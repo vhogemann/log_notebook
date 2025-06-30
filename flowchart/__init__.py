@@ -1,10 +1,10 @@
 from .flowchart import *
-from .node.node import *
+from .node import node_factory
 from .theme import *
 
 __all__ = [
     'FlowChart', 
-    'Node', 
+    'node_factory',
     'Theme', 
     'DEFAULT_THEME',
     'LIGHT_THEME',

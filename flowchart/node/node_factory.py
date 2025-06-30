@@ -1,4 +1,10 @@
 from .node import Node
+from .workflow import WorkflowManagerNode
 
 def node_factory(event:dict) -> Node:
-    return Node(event)
+    if(event['class'] == 'com.starlingbank.workflow.WorkflowManager'):
+        return WorkflowManagerNode(event)
+    elif(event['class' == 'com.starlingbank.cardprocessor.workflow.auth.handlers.AuthRequestSaveHandler']):
+        return AuthRequestSaveHandler(event)
+    else:
+        return Node(event)

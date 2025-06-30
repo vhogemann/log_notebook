@@ -1,7 +1,5 @@
 from graphviz import Digraph
 from typing import List
-
-from flowchart.message_parser import parse_message
 from .node.node import Node
 from .theme import Theme, DEFAULT_THEME
 
@@ -54,49 +52,7 @@ class FlowChart:
         dot.attr('edge',
                  color=self.theme.edge.color,
                  fontcolor=self.theme.edge.color)
-
-        def add_node(graph, n):
-            n.addToGraph(self.theme, graph)
-            if n.level == "ERROR":
-                error_node_name = f"{n.className}_error"
-                # Style the error node
-                error_message = n.stacktrace().replace('\n', "\l")
-                dot.node(error_node_name,
-                          label=error_message,
-                          shape=self.theme.error_note.shape, 
-                          style=self.theme.error_note.style, 
-                          fillcolor=self.theme.error_note.fillcolor,
-                          fontname=self.theme.error_note.fontname, 
-                          fontsize=self.theme.error_note.fontsize,
-                          fontcolor=self.theme.error_note.fontcolor,
-                          labelloc='l')  # Left-align label
-                # Add an edge from the main node to the error node
-                dot.edge(str(n.id), error_node_name, color=self.theme.error_edge.color, style=self.theme.error_edge.style)
-            elif n.level == "WARN":
-                warn_node_name = f"{n.className}_warn"
-                dot.node(warn_node_name,
-                         label=n.stacktrace().replace('\n', "\l"),
-                            shape=self.theme.warn_note.shape, 
-                            style=self.theme.warn_note.style,
-                            fillcolor=self.theme.warn_note.fillcolor,
-                            fontname=self.theme.warn_note.fontname,
-                            fontsize=self.theme.warn_note.fontsize,
-                            fontcolor=self.theme.warn_note.fontcolor,
-                            labelloc='l')
-                dot.edge(str(n.id), warn_node_name, color=self.theme.warn_edge.color, style=self.theme.warn_edge.style)
-            else:
-                for message in parse_message(n):
-                    dot.node(f'workflow_steps',
-                          label=message,
-                          shape=self.theme.info_note.shape, 
-                          style=self.theme.info_note.style, 
-                          fillcolor=self.theme.info_note.fillcolor,
-                          fontname=self.theme.info_note.fontname, 
-                          fontsize=self.theme.info_note.fontsize,
-                          fontcolor=self.theme.info_note.fontcolor,
-                          labelloc='l')
-                    dot.edge(str(n.id), 'workflow_steps', color=self.theme.info_edge.color, style=self.theme.info_edge.style)
-
+            
         # Add start and end nodes
         dot.node('S', 'start', 
                  shape=self.theme.start.shape,
@@ -116,7 +72,7 @@ class FlowChart:
         # Add start connection
         dot.edge('S', str(self.start.id))
 
-        add_node(dot, self.start)
+        self.start.addToGraph(self.theme, dot, dot)  # type: ignore
         for node in self.nodes:
           with dot.subgraph(name=f'cluster_{node.group}') as group: # type: ignore
             bgcolor, line_color = self._get_subgraph_colors(node.group, self.theme.group_colors)
@@ -125,12 +81,12 @@ class FlowChart:
             with group.subgraph(name=f'cluster_{node.service}') as sub: # type: ignore
                 bgcolor, line_color = self._get_subgraph_colors(node.service, self.theme.service_colors)
                 sub.attr(label=node.service, bgcolor=bgcolor, color=line_color, fontcolor=line_color)
-                add_node(sub, node)
+                node.addToGraph(self.theme, dot, sub)
 
         for vert_1, vert_2 in self.edges:
             dot.edge(str(vert_1.id), str(vert_2.id))
 
-        add_node(dot, self.end)
+        self.end.addToGraph(self.theme, dot, dot)
         # Add end connection
         dot.edge(str(self.end.id), 'E')
 
