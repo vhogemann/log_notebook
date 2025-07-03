@@ -1,16 +1,19 @@
 from graphviz import Digraph
+from flowchart.node.dtopp import dto_pp
+from flowchart.node.node import Node
 from flowchart.theme.theme import Theme
 
-
 class AuthRequestSaveHandler(Node):
-    """
-    Node to handle the saving of an authentication request.
-    """
-
-    def __init__(self, message: str):
-        super().__init__(message)
-
     def addNote(self, theme: Theme, graph: Digraph):
-        graph.node(self.id, label=self.message, shape='box', style='filled', fillcolor=theme.auth_request_save_node.fillcolor,
-                   fontcolor=theme.auth_request_save_node.fontcolor, fontsize=theme.auth_request_save_node.fontsize)
-        graph.edge(self.id, self.get_next_id(), color=self.get_edge_color(theme))
+        message = dto_pp(self.message)
+        print(f"Adding AuthRequestSaveHandler note with message: {message}")
+        graph.node(f'{self.id}_message',
+                    label=message,
+                    shape=theme.info_note.shape, 
+                style=theme.info_note.style, 
+                    fillcolor=theme.info_note.fillcolor,
+                    fontname=theme.info_note.fontname, 
+                    fontsize=theme.info_note.fontsize,
+                    fontcolor=theme.info_note.fontcolor,
+                    labelloc='l')
+        graph.edge(str(self.id), f'{self.id}_message', color=theme.info_edge.color, style=theme.info_edge.style)
