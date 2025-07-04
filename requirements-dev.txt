@@ -1,0 +1,19 @@
+# Development and Testing Dependencies
+# Add these to your main requirements.txt or install separately for testing
+
+# Testing Framework
+pytest>=6.0.0
+pytest-cov>=2.0.0
+pytest-mock>=3.0.0
+
+# Code Quality
+flake8>=3.8.0
+black>=21.0.0
+mypy>=0.812
+
+# Coverage
+coverage>=5.0.0
+
+# Development Tools
+ipdb>=0.13.0
+pdbpp>=0.10.0

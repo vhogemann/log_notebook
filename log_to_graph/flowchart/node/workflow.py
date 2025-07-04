@@ -1,6 +1,6 @@
 import re
 from graphviz import Digraph
-from flowchart.theme.theme import Theme
+from ..theme.theme import Theme
 from .node import Node
 
 class WorkflowManagerNode(Node):

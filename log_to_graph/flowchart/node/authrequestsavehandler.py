@@ -1,7 +1,7 @@
 from graphviz import Digraph
-from flowchart.node.dtopp import dto_pp
-from flowchart.node.node import Node
-from flowchart.theme.theme import Theme
+from .dtopp import dto_pp
+from .node import Node
+from ..theme.theme import Theme
 
 class AuthRequestSaveHandler(Node):
     def addNote(self, theme: Theme, graph: Digraph):

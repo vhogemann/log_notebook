@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  lognotebook:
+    build: .
+    ports:
+      - "8888:8888"
+    volumes:
+      # Mount the current directory to preserve changes
+      - .:/home/jovyan/work
+      # Mount a persistent volume for output files
+      - ./output:/home/jovyan/work/output
+    environment:
+      # Load environment variables from .env file
+      - HUMIO_TOKEN=${HUMIO_TOKEN}
+    env_file:
+      - .env
+    container_name: lognotebook-jupyter
+    restart: unless-stopped
+    command: ["start-notebook.sh", "--NotebookApp.token=''", "--NotebookApp.password=''", "--NotebookApp.allow_root=True", "--ip=0.0.0.0", "--port=8888", "--NotebookApp.base_url=/", "--NotebookApp.notebook_dir=/home/jovyan/work"]

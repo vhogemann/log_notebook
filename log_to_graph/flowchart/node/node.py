@@ -3,7 +3,7 @@ from datetime import datetime
 from graphviz import Digraph
 import humanize
 
-from flowchart.theme.theme import Theme
+from ..theme.theme import Theme
 
 class Node:
 
@@ -102,6 +102,7 @@ class Node:
                     fontname=theme.node.fontname, 
                     fontsize=theme.node.fontsize, 
                     fontcolor=theme.node.fontcolor)
+        self.addNote(theme, graph)
         if self.level == "ERROR":
             error_node_name = f"{self.id}_error"
             # Style the error node
@@ -115,6 +116,7 @@ class Node:
                         fontsize=theme.error_note.fontsize,
                         fontcolor=theme.error_note.fontcolor,
                         labelloc='l')
+            subgraph.edge(str(self.id), error_node_name, color=theme.error_edge.color, style=theme.error_edge.style)
         elif self.level == "WARN":
             warn_node_name = f"{self.id}_warn"
             graph.node(warn_node_name,
@@ -126,5 +128,5 @@ class Node:
                         fontsize=theme.warn_note.fontsize,
                         fontcolor=theme.warn_note.fontcolor,
                         labelloc='l')
-        self.addNote(theme, graph)
+            subgraph.edge(str(self.id), warn_node_name, color=theme.warn_edge.color, style=theme.warn_edge.style)
         return graph
