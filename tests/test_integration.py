@@ -88,10 +88,7 @@ class TestPackageIntegration:
             flowchart = FlowChart(correlation_id, nodes, HOTDOG_THEME)
             
             # Step 4: Generate graphviz (mock the actual rendering)
-            with pytest.raises(AttributeError):
-                # This will fail because we're not mocking Digraph properly,
-                # but it tests that the method exists and is callable
-                graphviz_output = flowchart.to_graphviz()
+            assert flowchart.to_graphviz() is not None
 
     def test_node_inheritance_compatibility(self, sample_event):
         """Test that Node subclasses work with the flowchart system."""

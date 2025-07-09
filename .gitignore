@@ -176,3 +176,12 @@ cython_debug/
 
 # Generated Diagram files
 output/
+
+# PyCharm specific files
+.idea/
+.idea/LogNotebook.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/workspace.xml
