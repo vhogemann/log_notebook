@@ -1,5 +1,3 @@
-# This file was moved to the theme/ subpackage.
-
 from dataclasses import dataclass
 from typing import Tuple
 

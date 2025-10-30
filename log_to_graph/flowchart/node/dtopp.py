@@ -4,7 +4,6 @@ from typing import Optional
 # Util method to extrat the string representation of a DTO from a log message
 # and format it for better readability
 
-
 def __extract_dto_from_log(message: str) -> Optional[str]:
     match = re.search(r'(\w*{.*})', message)
     if match:

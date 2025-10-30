@@ -1,5 +1,5 @@
 # Use the official Jupyter base notebook image
-FROM jupyter/base-notebook:latest
+FROM quay.io/jupyter/base-notebook:latest
 
 # Set the working directory
 WORKDIR /home/jovyan/work

@@ -8,7 +8,6 @@ from ..theme.theme import Theme
 class Node:
 
     def __init__(self, event:dict):
-        self.id = str(uuid.uuid4())
         if "class" in event:
             self.className = self._class_name(event["class"])
             self.packageName = self._package_name(event["class"])
@@ -46,6 +45,9 @@ class Node:
         now = datetime.now()
         # Format the difference in a human-readable way
         return f"{humanize.precisedelta(now - dt)} ago"
+
+    def getId(self):
+        return f"{self.service}_{self.className}"
 
     def stacktrace(self):
         stacktrace = []
@@ -93,7 +95,7 @@ class Node:
         pass;
 
     def addToGraph(self, theme: Theme, graph:Digraph, subgraph: Digraph):
-        subgraph.node(str(self.id), 
+        subgraph.node(str(self.getId()), 
                     label=self.label(), 
                     shape=theme.node.shape, 
                     style=theme.node.style, 
@@ -104,9 +106,9 @@ class Node:
                     fontcolor=theme.node.fontcolor)
         self.addNote(theme, graph)
         if self.level == "ERROR":
-            error_node_name = f"{self.id}_error"
+            error_node_name = f"{self.getId()}_error"
             # Style the error node
-            error_message = self.stacktrace().replace('\n', "\l")
+            error_message = self.stacktrace().replace('\n', "\\l")
             graph.node(error_node_name,
                         label=error_message,
                         shape=theme.error_note.shape, 
@@ -116,9 +118,9 @@ class Node:
                         fontsize=theme.error_note.fontsize,
                         fontcolor=theme.error_note.fontcolor,
                         labelloc='l')
-            subgraph.edge(str(self.id), error_node_name, color=theme.error_edge.color, style=theme.error_edge.style)
+            subgraph.edge(str(self.getId()), error_node_name, color=theme.error_edge.color, style=theme.error_edge.style)
         elif self.level == "WARN":
-            warn_node_name = f"{self.id}_warn"
+            warn_node_name = f"{self.getId()}_warn"
             graph.node(warn_node_name,
                         label=self.stacktrace().replace('\n', "\l"),
                         shape=theme.warn_note.shape, 
@@ -128,5 +130,5 @@ class Node:
                         fontsize=theme.warn_note.fontsize,
                         fontcolor=theme.warn_note.fontcolor,
                         labelloc='l')
-            subgraph.edge(str(self.id), warn_node_name, color=theme.warn_edge.color, style=theme.warn_edge.style)
+            subgraph.edge(str(self.getId()), warn_node_name, color=theme.warn_edge.color, style=theme.warn_edge.style)
         return graph

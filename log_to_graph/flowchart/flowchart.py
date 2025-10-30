@@ -70,7 +70,7 @@ class FlowChart:
                  fontcolor=self.theme.end.fontcolor)
   
         # Add start connection
-        dot.edge('S', str(self.start.id))
+        dot.edge('S', str(self.start.getId()))
 
         self.start.addToGraph(self.theme, dot, dot)  # type: ignore
         for node in self.nodes:
@@ -84,11 +84,11 @@ class FlowChart:
                 node.addToGraph(self.theme, dot, sub)
 
         for vert_1, vert_2 in self.edges:
-            dot.edge(str(vert_1.id), str(vert_2.id))
+            dot.edge(str(vert_1.getId()), str(vert_2.getId()))
 
         self.end.addToGraph(self.theme, dot, dot)
         # Add end connection
-        dot.edge(str(self.end.id), 'E')
+        dot.edge(str(self.end.getId()), 'E')
 
         return dot
 
