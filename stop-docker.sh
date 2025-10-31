@@ -20,12 +20,18 @@ if [ ! -f "docker-compose.yml" ]; then
 fi
 
 echo "🔍 Checking container status..."
-if docker-compose ps | grep -q "lognotebook-jupyter"; then
-    echo "📦 Found running LogNotebook container"
-    
+WEB_RUNNING=$(docker-compose ps | grep -c "lognotebook-web" || true)
+JUPYTER_RUNNING=$(docker-compose ps | grep -c "lognotebook-jupyter" || true)
+
+if [ "$WEB_RUNNING" -gt 0 ] || [ "$JUPYTER_RUNNING" -gt 0 ]; then
+    echo "📦 Found running LogNotebook container(s):"
+    [ "$WEB_RUNNING" -gt 0 ] && echo "   - Web Interface (lognotebook-web)"
+    [ "$JUPYTER_RUNNING" -gt 0 ] && echo "   - Jupyter Notebook (lognotebook-jupyter)"
+    echo ""
+
     echo "🛑 Stopping and removing containers..."
     docker-compose down
-    
+
     echo "✅ LogNotebook containers have been stopped and removed."
     echo ""
     echo "📋 Container cleanup complete!"

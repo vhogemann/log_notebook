@@ -1,8 +1,11 @@
 version: '3.8'
 
 services:
-  lognotebook:
-    build: .
+  # Jupyter Notebook Interface
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8888:8888"
     volumes:
@@ -18,3 +21,23 @@ services:
     container_name: lognotebook-jupyter
     restart: unless-stopped
     command: ["start-notebook.sh", "--NotebookApp.token=''", "--NotebookApp.password=''", "--NotebookApp.allow_root=True", "--ip=0.0.0.0", "--port=8888", "--NotebookApp.base_url=/", "--NotebookApp.notebook_dir=/home/jovyan/work"]
+
+  # Streamlit Web Interface
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    ports:
+      - "8501:8501"
+    volumes:
+      # Mount the current directory to preserve changes
+      - .:/app
+      # Mount a persistent volume for output files
+      - ./output:/app/output
+    environment:
+      # Load environment variables from .env file
+      - HUMIO_TOKEN=${HUMIO_TOKEN}
+    env_file:
+      - .env
+    container_name: lognotebook-web
+    restart: unless-stopped
