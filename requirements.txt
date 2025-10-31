@@ -4,6 +4,9 @@ humiolib==0.2.6
 humanize==4.12.3
 python-dotenv==1.1.1
 
+# Web interface
+streamlit==1.39.0
+
 # Jupyter notebook support (optional - only needed for running the notebooks)
 ipykernel==6.29.5
 ipython==8.18.1
