@@ -1,82 +1,16 @@
-# This file was moved to the theme/ subpackage.
+from .theme import make_theme
 
-from .theme import Theme, GraphStyle, GraphLabelStyle, EdgeStyle, NodeStyle
-
-AUTUMN_LEAVES_THEME = Theme(
-    graph=GraphStyle(
-        bgcolor='#fff8e1',
-        fontcolor='#a0522d',
-        fontname='Georgia',
-    ),
-    label=GraphLabelStyle(
-        fontname='Georgia',
-        fontsize='14',
-        bgcolor='#ffb347',
-    ),
-    edge=EdgeStyle(
-        color='#d2691e',
-        style='',
-    ),
-    node=NodeStyle(
-        shape='box',
-        style='rounded,filled',
-        fillcolor='#ffb347',
-        fontname='Georgia',
-        fontsize='14',
-        fontcolor='#a0522d',
-    ),
-    start=NodeStyle(
-        shape='circle',
-        style='filled',
-        fillcolor="#ff6961",
-        fontname='Georgia',
-        fontsize='14',
-        fontcolor='#fff8e1',
-    ),
-    end=NodeStyle(
-        shape='doublecircle',
-        style='filled',
-        fillcolor='#c2b280',
-        fontname='Georgia',
-        fontsize='14',
-        fontcolor='#a0522d',
-    ),
-    error_note=NodeStyle(
-        shape='note',
-        style='filled',
-        fillcolor='#ff6961',
-        fontname='Georgia',
-        fontsize='10',
-        fontcolor='#fff8e1',
-    ),
-    error_edge=EdgeStyle(
-        color='#ff6961',
-        style='dashed',
-    ),
-    warn_note=NodeStyle(
-        shape='note',
-        style='filled',
-        fillcolor='#ffb347',
-        fontname='Georgia',
-        fontsize='10',
-        fontcolor='#a0522d',
-    ),
-    warn_edge=EdgeStyle(
-        color='#ffb347',
-        style='dashed',
-    ),
-    info_note=NodeStyle(
-        shape='note',
-        style='filled',
-        fillcolor='#c2b280',
-        fontname='Georgia',
-        fontsize='10',
-        fontcolor='#a0522d',
-    ),
-    info_edge=EdgeStyle(
-        color='#c2b280',
-        style='dashed',
-    ),
+AUTUMN_LEAVES_THEME = make_theme(
+    fontname='Georgia',
+    graph_bgcolor='#fff8e1', graph_fontcolor='#a0522d',
+    label_bgcolor='#ffb347',
+    edge_color='#d2691e',
+    node_fillcolor='#ffb347', node_fontcolor='#a0522d',
+    start_fillcolor='#ff6961', start_fontcolor='#fff8e1',
+    end_fillcolor='#c2b280', end_fontcolor='#a0522d',
+    error_fillcolor='#ff6961', error_fontcolor='#fff8e1', error_edge_color='#ff6961',
+    warn_fillcolor='#ffb347', warn_fontcolor='#a0522d', warn_edge_color='#ffb347',
+    info_fillcolor='#c2b280', info_fontcolor='#a0522d', info_edge_color='#c2b280',
     service_colors=[
         ("#ffb347", "#a0522d"),
         ("#ff6961", "#fff8e1"),
@@ -89,5 +23,5 @@ AUTUMN_LEAVES_THEME = Theme(
         ("#ffb347", "#a0522d"),
         ("#ff6961", "#fff8e1"),
         ("#c2b280", "#a0522d"),
-    ]
+    ],
 )

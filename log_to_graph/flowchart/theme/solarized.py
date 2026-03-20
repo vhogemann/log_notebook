@@ -1,82 +1,16 @@
-# This file was moved to the theme/ subpackage.
+from .theme import make_theme
 
-from .theme import Theme, GraphStyle, GraphLabelStyle, EdgeStyle, NodeStyle
-
-SOLARIZED_THEME = Theme(
-    graph=GraphStyle(
-        bgcolor='#fdf6e3',
-        fontcolor='#657b83',
-        fontname='Fira Mono',
-    ),
-    label=GraphLabelStyle(
-        fontname='Fira Mono',
-        fontsize='14',
-        bgcolor='#eee8d5',
-    ),
-    edge=EdgeStyle(
-        color='#b58900',
-        style='',
-    ),
-    node=NodeStyle(
-        shape='box',
-        style='rounded,filled',
-        fillcolor='#b58900',
-        fontname='Fira Mono',
-        fontsize='14',
-        fontcolor='#fdf6e3',
-    ),
-    start=NodeStyle(
-        shape='circle',
-        style='filled',
-        fillcolor="#2aa198",
-        fontname='Fira Mono',
-        fontsize='14',
-        fontcolor='#fdf6e3',
-    ),
-    end=NodeStyle(
-        shape='doublecircle',
-        style='filled',
-        fillcolor='#268bd2',
-        fontname='Fira Mono',
-        fontsize='14',
-        fontcolor='#fdf6e3',
-    ),
-    error_note=NodeStyle(
-        shape='note',
-        style='filled',
-        fillcolor='#dc322f',
-        fontname='Fira Mono',
-        fontsize='10',
-        fontcolor='#fdf6e3',
-    ),
-    error_edge=EdgeStyle(
-        color='#dc322f',
-        style='dashed',
-    ),
-    warn_note=NodeStyle(
-        shape='note',
-        style='filled',
-        fillcolor='#b58900',
-        fontname='Fira Mono',
-        fontsize='10',
-        fontcolor='#fdf6e3',
-    ),
-    warn_edge=EdgeStyle(
-        color='#b58900',
-        style='dashed',
-    ),
-    info_note=NodeStyle(
-        shape='note',
-        style='filled',
-        fillcolor='#2aa198',
-        fontname='Fira Mono',
-        fontsize='10',
-        fontcolor='#fdf6e3',
-    ),
-    info_edge=EdgeStyle(
-        color='#2aa198',
-        style='dashed',
-    ),
+SOLARIZED_THEME = make_theme(
+    fontname='Fira Mono',
+    graph_bgcolor='#fdf6e3', graph_fontcolor='#657b83',
+    label_bgcolor='#eee8d5',
+    edge_color='#b58900',
+    node_fillcolor='#b58900', node_fontcolor='#fdf6e3',
+    start_fillcolor='#2aa198', start_fontcolor='#fdf6e3',
+    end_fillcolor='#268bd2', end_fontcolor='#fdf6e3',
+    error_fillcolor='#dc322f', error_fontcolor='#fdf6e3', error_edge_color='#dc322f',
+    warn_fillcolor='#b58900', warn_fontcolor='#fdf6e3', warn_edge_color='#b58900',
+    info_fillcolor='#2aa198', info_fontcolor='#fdf6e3', info_edge_color='#2aa198',
     service_colors=[
         ("#b58900", "#fdf6e3"),
         ("#2aa198", "#fdf6e3"),
@@ -90,5 +24,5 @@ SOLARIZED_THEME = Theme(
         ("#fdf6e3", "#657b83"),
         ("#b58900", "#fdf6e3"),
         ("#2aa198", "#fdf6e3"),
-    ]
+    ],
 )

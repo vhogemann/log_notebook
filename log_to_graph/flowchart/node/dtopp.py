@@ -12,25 +12,22 @@ def __extract_dto_from_log(message: str) -> Optional[str]:
     return None
 
 def __format_message(message: str) -> Optional[str]:
-    def format_message_inner(message: str, tabsize, acc) -> str:
-        if message.__len__() == 0:
-            return acc
-        head, *tail = message
-        if head == '{':
-            acc += head + '\l' + ' ' * (tabsize + 4) 
-            return format_message_inner(''.join(tail), tabsize + 4, acc)
-        elif head == '}':
-            acc += '\l' + ' ' * (tabsize - 4) + head
-            return format_message_inner(''.join(tail), tabsize - 4, acc)
-        elif head == ',':
-            acc += head + '\l' + ' ' * tabsize
-            return format_message_inner(''.join(tail), tabsize, acc)
-        elif head == ' ':
-            return format_message_inner(''.join(tail), tabsize, acc)
+    acc = ''
+    tabsize = 0
+    for char in message:
+        if char == '{':
+            acc += char + '\\l' + ' ' * (tabsize + 4)
+            tabsize += 4
+        elif char == '}':
+            acc += '\\l' + ' ' * (tabsize - 4) + char
+            tabsize -= 4
+        elif char == ',':
+            acc += char + '\\l' + ' ' * tabsize
+        elif char == ' ':
+            pass
         else:
-            acc += head
-            return format_message_inner(''.join(tail), tabsize, acc)
-    return format_message_inner(message, 0, '')
+            acc += char
+    return acc
 
 def dto_pp(message: str) -> Optional[str]:
     """

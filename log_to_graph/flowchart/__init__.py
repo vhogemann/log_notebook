@@ -1,6 +1,12 @@
-from .flowchart import *
+from .flowchart import FlowChart
 from .node import node_factory
-from .theme import *
+from .theme import (
+    Theme, GraphStyle, GraphLabelStyle, EdgeStyle, NodeStyle,
+    DEFAULT_THEME, make_theme,
+    LIGHT_THEME, UNICORN_THEME, VAPORWAVE_THEME, HOTDOG_THEME,
+    SOLARIZED_THEME, MATRIX_THEME, GAMEBOY_THEME, CYBERPUNK_THEME,
+    AUTUMN_LEAVES_THEME, OCEANIC_THEME, RAINBOW_THEME, AURORA_THEME,
+)
 
 __all__ = [
     'FlowChart', 

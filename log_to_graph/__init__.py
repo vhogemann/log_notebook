@@ -3,7 +3,7 @@
 # This package contains modules for analyzing and visualizing log data
 # from Humio repositories as interactive flowcharts.
 
-from .humio import query_logs
+from .humio import query_logs, query
 from .flowchart import FlowChart, node_factory
 from .flowchart import (
     LIGHT_THEME, 
@@ -24,6 +24,7 @@ __author__ = "LogNotebook Project"
 __description__ = "Log analysis and flowchart visualization for Humio data"
 
 __all__ = [
+    "query",
     "query_logs",
     "FlowChart", 
     "node_factory",

@@ -1,82 +1,16 @@
-# This file was moved to the theme/ subpackage.
+from .theme import make_theme
 
-from .theme import Theme, GraphStyle, GraphLabelStyle, EdgeStyle, NodeStyle
-
-GAMEBOY_THEME = Theme(
-    graph=GraphStyle(
-        bgcolor='#9bbc0f',
-        fontcolor='#0f380f',
-        fontname='Courier New',
-    ),
-    label=GraphLabelStyle(
-        fontname='Courier New',
-        fontsize='14',
-        bgcolor='#8bac0f',
-    ),
-    edge=EdgeStyle(
-        color='#306230',
-        style='',
-    ),
-    node=NodeStyle(
-        shape='box',
-        style='rounded,filled',
-        fillcolor='#8bac0f',
-        fontname='Courier New',
-        fontsize='14',
-        fontcolor='#0f380f',
-    ),
-    start=NodeStyle(
-        shape='circle',
-        style='filled',
-        fillcolor="#306230",
-        fontname='Courier New',
-        fontsize='14',
-        fontcolor='#e0f8d0',
-    ),
-    end=NodeStyle(
-        shape='doublecircle',
-        style='filled',
-        fillcolor='#0f380f',
-        fontname='Courier New',
-        fontsize='14',
-        fontcolor='#e0f8d0',
-    ),
-    error_note=NodeStyle(
-        shape='note',
-        style='filled',
-        fillcolor='#e0f8d0',
-        fontname='Courier New',
-        fontsize='10',
-        fontcolor='#0f380f',
-    ),
-    error_edge=EdgeStyle(
-        color='#e0f8d0',
-        style='dashed',
-    ),
-    warn_note=NodeStyle(
-        shape='note',
-        style='filled',
-        fillcolor='#8bac0f',
-        fontname='Courier New',
-        fontsize='10',
-        fontcolor='#0f380f',
-    ),
-    warn_edge=EdgeStyle(
-        color='#8bac0f',
-        style='dashed',
-    ),
-    info_note=NodeStyle(
-        shape='note',
-        style='filled',
-        fillcolor='#9bbc0f',
-        fontname='Courier New',
-        fontsize='10',
-        fontcolor='#0f380f',
-    ),
-    info_edge=EdgeStyle(
-        color='#9bbc0f',
-        style='dashed',
-    ),
+GAMEBOY_THEME = make_theme(
+    fontname='Courier New',
+    graph_bgcolor='#9bbc0f', graph_fontcolor='#0f380f',
+    label_bgcolor='#8bac0f',
+    edge_color='#306230',
+    node_fillcolor='#8bac0f', node_fontcolor='#0f380f',
+    start_fillcolor='#306230', start_fontcolor='#e0f8d0',
+    end_fillcolor='#0f380f', end_fontcolor='#e0f8d0',
+    error_fillcolor='#e0f8d0', error_fontcolor='#0f380f', error_edge_color='#e0f8d0',
+    warn_fillcolor='#8bac0f', warn_fontcolor='#0f380f', warn_edge_color='#8bac0f',
+    info_fillcolor='#9bbc0f', info_fontcolor='#0f380f', info_edge_color='#9bbc0f',
     service_colors=[
         ("#8bac0f", "#0f380f"),
         ("#306230", "#e0f8d0"),
@@ -88,5 +22,5 @@ GAMEBOY_THEME = Theme(
         ("#8bac0f", "#0f380f"),
         ("#306230", "#e0f8d0"),
         ("#0f380f", "#e0f8d0"),
-    ]
+    ],
 )

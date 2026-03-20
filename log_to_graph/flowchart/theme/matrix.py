@@ -1,82 +1,16 @@
-# This file was moved to the theme/ subpackage.
+from .theme import make_theme
 
-from .theme import Theme, GraphStyle, GraphLabelStyle, EdgeStyle, NodeStyle
-
-MATRIX_THEME = Theme(
-    graph=GraphStyle(
-        bgcolor='#000000',
-        fontcolor='#00ff41',
-        fontname='Consolas',
-    ),
-    label=GraphLabelStyle(
-        fontname='Consolas',
-        fontsize='14',
-        bgcolor='#003b00',
-    ),
-    edge=EdgeStyle(
-        color='#00ff41',
-        style='',
-    ),
-    node=NodeStyle(
-        shape='box',
-        style='rounded,filled',
-        fillcolor='#003b00',
-        fontname='Consolas',
-        fontsize='14',
-        fontcolor='#00ff41',
-    ),
-    start=NodeStyle(
-        shape='circle',
-        style='filled',
-        fillcolor="#00ff41",
-        fontname='Consolas',
-        fontsize='14',
-        fontcolor='#000000',
-    ),
-    end=NodeStyle(
-        shape='doublecircle',
-        style='filled',
-        fillcolor='#003b00',
-        fontname='Consolas',
-        fontsize='14',
-        fontcolor='#00ff41',
-    ),
-    error_note=NodeStyle(
-        shape='note',
-        style='filled',
-        fillcolor='#ff0000',
-        fontname='Consolas',
-        fontsize='10',
-        fontcolor='#00ff41',
-    ),
-    error_edge=EdgeStyle(
-        color='#ff0000',
-        style='dashed',
-    ),
-    warn_note=NodeStyle(
-        shape='note',
-        style='filled',
-        fillcolor='#ffff00',
-        fontname='Consolas',
-        fontsize='10',
-        fontcolor='#003b00',
-    ),
-    warn_edge=EdgeStyle(
-        color='#ffff00',
-        style='dashed',
-    ),
-    info_note=NodeStyle(
-        shape='note',
-        style='filled',
-        fillcolor='#003b00',
-        fontname='Consolas',
-        fontsize='10',
-        fontcolor='#00ff41',
-    ),
-    info_edge=EdgeStyle(
-        color='#00ff41',
-        style='dashed',
-    ),
+MATRIX_THEME = make_theme(
+    fontname='Consolas',
+    graph_bgcolor='#000000', graph_fontcolor='#00ff41',
+    label_bgcolor='#003b00',
+    edge_color='#00ff41',
+    node_fillcolor='#003b00', node_fontcolor='#00ff41',
+    start_fillcolor='#00ff41', start_fontcolor='#000000',
+    end_fillcolor='#003b00', end_fontcolor='#00ff41',
+    error_fillcolor='#ff0000', error_fontcolor='#00ff41', error_edge_color='#ff0000',
+    warn_fillcolor='#ffff00', warn_fontcolor='#003b00', warn_edge_color='#ffff00',
+    info_fillcolor='#003b00', info_fontcolor='#00ff41', info_edge_color='#00ff41',
     service_colors=[
         ("#003b00", "#00ff41"),
         ("#00ff41", "#000000"),
@@ -89,5 +23,5 @@ MATRIX_THEME = Theme(
         ("#003b00", "#00ff41"),
         ("#00ff41", "#000000"),
         ("#ff0000", "#00ff41"),
-    ]
+    ],
 )

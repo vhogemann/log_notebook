@@ -1,4 +1,5 @@
 import uuid
+import textwrap
 from datetime import datetime
 from graphviz import Digraph
 import humanize
@@ -49,7 +50,7 @@ class Node:
     def getId(self):
         return f"{self.service}_{self.className}"
 
-    def stacktrace(self):
+    def stacktrace(self, max_width: int = 120):
         stacktrace = []
         for line in self.message.split("\n"):
             if line.strip().startswith("at "):
@@ -59,7 +60,13 @@ class Node:
                     stacktrace.append("...")
             else:
                 stacktrace.append(line)
-        return "\n".join(stacktrace)
+        wrapped = []
+        for line in stacktrace:
+            if len(line) > max_width:
+                wrapped.extend(textwrap.wrap(line, width=max_width, subsequent_indent="  "))
+            else:
+                wrapped.append(line)
+        return "\n".join(wrapped)
 
     def _package_name(self, class_name):
         if "." in class_name:
@@ -122,7 +129,7 @@ class Node:
         elif self.level == "WARN":
             warn_node_name = f"{self.getId()}_warn"
             graph.node(warn_node_name,
-                        label=self.stacktrace().replace('\n', "\l"),
+                        label=self.stacktrace().replace('\n', "\\l"),
                         shape=theme.warn_note.shape, 
                         style=theme.warn_note.style, 
                         fillcolor=theme.warn_note.fillcolor,

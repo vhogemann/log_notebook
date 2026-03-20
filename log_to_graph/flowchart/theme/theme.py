@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Tuple
+from typing import List, Tuple
 
 @dataclass(frozen=True)
 class GraphStyle:
@@ -138,16 +138,54 @@ DEFAULT_THEME = Theme(
         ("#2980b9", "#ffffff"),
         ("#16a085", "#ffffff"), 
         ("#6c7a89", "#ffffff"),  # Muted blue-gray
-        ("#5d8aa8", "#ffffff"),  # Muted blue
     ],
     group_colors=[
-        ("#bbbbbb", "#383838"),
-        ("#888888", "#323232"),
-        ("#666666", "#2a2a2a"),
-        ("#444444", "#242424"),
-        ("#999999", "#303030"),
-        ("#aaaaaa", "#353535"),
-        ("#777777", "#292929"),
-        ("#555555", "#202020"),
-    ]
+        ("#3a3a3a", "#cccccc"),
+        ("#2c3e50", "#ffffff"),
+        ("#1a252f", "#ffffff"),
+        ("#2e4057", "#ffffff"),
+    ],
 )
+
+
+def make_theme(
+    fontname: str,
+    graph_bgcolor: str,
+    graph_fontcolor: str,
+    label_bgcolor: str,
+    edge_color: str,
+    node_fillcolor: str,
+    node_fontcolor: str,
+    start_fillcolor: str,
+    start_fontcolor: str,
+    end_fillcolor: str,
+    end_fontcolor: str,
+    error_fillcolor: str,
+    error_fontcolor: str,
+    error_edge_color: str,
+    warn_fillcolor: str,
+    warn_fontcolor: str,
+    warn_edge_color: str,
+    info_fillcolor: str,
+    info_fontcolor: str,
+    info_edge_color: str,
+    service_colors: List[Tuple[str, str]],
+    group_colors: List[Tuple[str, str]],
+    note_fontsize: str = '10',
+) -> Theme:
+    return Theme(
+        graph=GraphStyle(bgcolor=graph_bgcolor, fontcolor=graph_fontcolor, fontname=fontname),
+        label=GraphLabelStyle(fontname=fontname, fontsize='14', bgcolor=label_bgcolor),
+        edge=EdgeStyle(color=edge_color, style=''),
+        node=NodeStyle(shape='box', style='rounded,filled', fillcolor=node_fillcolor, fontname=fontname, fontsize='14', fontcolor=node_fontcolor),
+        start=NodeStyle(shape='circle', style='filled', fillcolor=start_fillcolor, fontname=fontname, fontsize='14', fontcolor=start_fontcolor),
+        end=NodeStyle(shape='doublecircle', style='filled', fillcolor=end_fillcolor, fontname=fontname, fontsize='14', fontcolor=end_fontcolor),
+        error_note=NodeStyle(shape='note', style='filled', fillcolor=error_fillcolor, fontname=fontname, fontsize=note_fontsize, fontcolor=error_fontcolor),
+        error_edge=EdgeStyle(color=error_edge_color, style='dashed'),
+        warn_note=NodeStyle(shape='note', style='filled', fillcolor=warn_fillcolor, fontname=fontname, fontsize=note_fontsize, fontcolor=warn_fontcolor),
+        warn_edge=EdgeStyle(color=warn_edge_color, style='dashed'),
+        info_note=NodeStyle(shape='note', style='filled', fillcolor=info_fillcolor, fontname=fontname, fontsize='10', fontcolor=info_fontcolor),
+        info_edge=EdgeStyle(color=info_edge_color, style='dashed'),
+        service_colors=service_colors,
+        group_colors=group_colors,
+    )
