@@ -1,5 +1,5 @@
 from graphviz import Digraph
-from typing import List
+from typing import List, Dict, Tuple
 from .node.node import Node
 from .theme import Theme, DEFAULT_THEME
 
@@ -13,6 +13,14 @@ class FlowChart:
         for i in range(len(sorted_logs) - 1):
             edges.append((sorted_logs[i], sorted_logs[i + 1]))
         return edges
+
+    # Count the occurrences of each unique edge
+    def _count_edges(self, edges: List[tuple]) -> Dict[Tuple[str, str], int]:
+        edge_counts = {}
+        for vert_1, vert_2 in edges:
+            edge_key = (str(vert_1.getId()), str(vert_2.getId()))
+            edge_counts[edge_key] = edge_counts.get(edge_key, 0) + 1
+        return edge_counts
 
     def __init__(self, correlation_id: str, nodes: List[Node], theme: Theme = DEFAULT_THEME):
         self.correlation_id = correlation_id
@@ -87,8 +95,16 @@ class FlowChart:
                     sub.attr(label=node.service, bgcolor=bgcolor, color=line_color, fontcolor=line_color)
                     node.addToGraph(self.theme, dot, sub)
 
-        for vert_1, vert_2 in self.edges:
-            dot.edge(str(vert_1.getId()), str(vert_2.getId()))
+        # Count edge occurrences and add them with labels for duplicates
+        edge_counts = self._count_edges(self.edges)
+
+        for (src_id, dest_id), count in edge_counts.items():
+            if count > 1:
+                # Add label showing the count and make the line bolder for repeated edges
+                dot.edge(src_id, dest_id, penwidth='2', fontsize='10')
+            else:
+                # Single connection, regular edge
+                dot.edge(src_id, dest_id)
 
         # Add end connection
         dot.edge(str(self.end.getId()), 'E')
